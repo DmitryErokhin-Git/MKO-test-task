@@ -1,0 +1,43 @@
+<table *ngIf="(tableConfig$ | async) && (tableData$ | async)?.length !== 0">
+  <thead>
+  <tr class="sticky-header text-center">
+    <th *ngFor="let column of (tableConfig$ | async)?.thead?.columns">{{ column.header }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngIf="(tableData$ | async) as tableData">
+    <tr (click)="this.details.emit(post)"
+        *ngFor="let post of tableData | paginate: {itemsPerPage,currentPage}"
+        [class.selected-row]="areObjectsEqual(post, selectedRow)" class="btn-hidden">
+
+      <ng-container *ngFor="let column of (tableConfig$ | async)?.thead?.columns">
+
+        <td *ngIf="column.field !== 'actions'">
+          <ng-template [field]="column.field" [keyword]="formSearch.value?.keyword" [post]="post"
+                       cell-container>
+          </ng-template>
+        </td>
+
+        <td *ngIf="column.field === 'actions'">
+          <ng-container>
+            <div aria-label="button group" class="btn-group " role="group">
+              <button (click)="this.openModal.emit({type:'edit', post})" class="btn btn-warning button-hidden"
+                      type="button">
+                <img alt="edit" height="16" src="../../../../assets/pencil.svg" width="16">
+              </button>
+              <button (click)="this.openModal.emit({type:'delete', post})" class="btn btn-danger button-hidden"
+                      type="button">
+                <img alt="trash" height="16" src="../../../../assets/trash.svg" width="16">
+              </button>
+            </div>
+          </ng-container>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
+
+<div *ngIf="(tableData$ | async)?.length === 0 && !(loading$ | async)" class="no-data">
+  Данные не найдены
+</div>

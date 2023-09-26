@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand bg-body-tertiary">
+  <div class="container-fluid d-flex justify-content-between flex-md-nowrap">
+    <form [formGroup]="formSearch" class="d-flex" role="search">
+      <input (keydown.esc)="this.clearSearch.emit()" aria-label="Поиск" autofocus
+             class="form-control me-2" formControlName="keyword"
+             id="keyword" placeholder="Поиск" type="search">
+      <button (click)="this.clearSearch.emit()" class="btn btn-outline-primary" type="button">Сбросить</button>
+    </form>
+
+    <button (click)="this.addEvent.emit({type:'add'})" class="btn btn-success" type="button">
+      Добавить
+    </button>
+  </div>
+</nav>

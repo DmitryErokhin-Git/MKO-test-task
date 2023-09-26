@@ -1,0 +1,42 @@
+<div class="loader">
+  <ngx-ui-loader [loaderId]="'master'"></ngx-ui-loader>
+</div>
+
+<header>
+  <app-header (addEvent)="openModalWithData($event.type)"
+              (clearSearch)="clearSearch()"
+              [formSearch]="formSearch">
+  </app-header>
+</header>
+
+<div class="d-flex">
+  <div class="d-flex flex-column">
+    <main>
+      <app-table (details)="detailsPost($event)"
+                 (openModal)="openModalWithData($event.type, $event.post)"
+                 [currentPage]="currentPage"
+                 [formSearch]="formSearch"
+                 [itemsPerPage]="itemsPerPage"
+                 [loading$]="dataService.loading$"
+                 [selectedRow]="selectedRow"
+                 [tableConfig$]="dataService.tableConfig$"
+                 [tableData$]="dataService.tableData$">
+      </app-table>
+    </main>
+
+    <footer>
+      <app-footer (pageChange)="onPageChange($event)"
+                  (setItems)="setItemsPerPage($event.number, $event.totalItems)"
+                  [quantityMessages]="(dataService.tableData$ | async)?.length || 0">
+      </app-footer>
+    </footer>
+  </div>
+
+  <aside>
+    <app-details (editEvent)="openModalWithData($event.type, $event.post)"
+                 [selectedRow]="selectedRow">
+    </app-details>
+  </aside>
+</div>
+
+

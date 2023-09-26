@@ -1,0 +1,19 @@
+<div class="card ">
+  <div class="card__sticky-header">
+    <h5 class="card-header">Подробнее</h5>
+  </div>
+  <h5 *ngIf="!!!selectedRow" class="card-title m-3">Выберете сообщение</h5>
+  <div *ngIf="!!selectedRow" class="card-body d-flex flex-column justify-content-between">
+    <div>
+      <h5 class="card-title">{{selectedRow.username}}</h5>
+      <p class="card-text">{{selectedRow.datetime | date: 'dd.MM.yyyy HH:mm:ss' }}</p>
+      <p class="card-text">{{selectedRow.message}}</p>
+    </div>
+    <div>
+      <button (click)="this.editEvent.emit({type:'edit', post:selectedRow})" class="btn btn-warning"
+              type="button">
+        Изменить
+      </button>
+    </div>
+  </div>
+</div>

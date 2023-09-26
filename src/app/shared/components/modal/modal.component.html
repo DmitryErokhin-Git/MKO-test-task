@@ -1,0 +1,53 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">{{titleModal}}</h1>
+    <button (click)="activeModal.close(false)" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+
+  </div>
+  <div class="modal-body">
+    <form *ngIf="data.type !== 'delete'" [formGroup]="formPost">
+      <div class="mb-3">
+        <label class="form-label" for="username">Ник</label>
+        <input aria-label="Ник" class="form-control" formControlName="username" id="username"
+               placeholder="Введите свой ник"
+               type="text">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="message">Текст сообщения</label>
+        <input aria-label="Текст сообщения" class="form-control" formControlName="message" id="message"
+               placeholder="Введите текст сообщения"
+               type="text">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="datetime">Дата</label>
+        <input aria-label="Дата и время" class="form-control" formControlName="datetime" id="datetime"
+               placeholder="Выберите дату"
+               type="datetime-local">
+      </div>
+    </form>
+
+    <div *ngIf="data.type === 'delete'" class="modal-body">
+      <p>{{TEXT_MODAL.delete.bodyText}}</p>
+    </div>
+
+    <div class="modal-footer">
+      <button (click)="activeModal.close(false)" class="btn btn-secondary" type="button">Закрыть</button>
+      <ng-container [ngSwitch]="data.type">
+        <ng-container *ngSwitchCase="'add'">
+          <button (click)="activeModal.close({type: data.type, post: formPost.value})"
+                  [disabled]="formPost.invalid" class="btn btn-success"
+                  type="button">{{buttonText}}</button>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <button (click)="activeModal.close({type: data.type, post: formPost.value})"
+                  [disabled]="formPost.invalid || areObjectsEqual(data.post, formPost.value)" class="btn btn-warning"
+                  type="button">{{buttonText}}</button>
+        </ng-container>
+        <ng-container *ngSwitchCase="'delete'">
+          <button (click)="activeModal.close({type: data.type, post: data.post})" class="btn btn-danger"
+                  type="button">{{buttonText}}</button>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

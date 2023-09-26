@@ -1,0 +1,14 @@
+<ng-container [ngSwitch]="field">
+  <ng-container *ngSwitchCase="'id'">
+    <div [innerHTML]="post.id.toString() | highlighter: keyword" class="text-center"></div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'username'">
+    <div [innerHTML]="post.username | highlighter: keyword"></div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'datetime'">
+    <div [innerHTML]="post.datetime | date: 'dd.MM.yyyy HH:mm:ss' | highlighter: keyword" class="text-center"></div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'message'">
+    <div [innerHTML]="post.message | truncate: LIMIT_CHARACTERS | highlighter: keyword"></div>
+  </ng-container>
+</ng-container>
